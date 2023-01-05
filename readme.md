@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Cypress Spellcheck Screen Shot][product-screenshot]](https://github.com/waltir/cypress-spellcheck/assets/Cypress-Spellcheck-v1.jpg)
+![product-screenshot](https://github.com/waltir/cypress-spellcheck/blob/master/assets/Cypress-Spellcheck-v1.jpg?raw=true)
 
 This module is designed to help flag spelling mistakes found within your application. While this type of assertion is not necessary for most tests it proves to be beneficial in initial test scripts executed against new products and projects. Once you've had time to write assertions for the static strings in your application you can remove calls to this module from your tests.
 
@@ -107,9 +107,55 @@ You can now use assetions within the Testing Library.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+To use the assertions in your tests simply call the isSpelledCorrectly function.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+  ```
+    cy.isSpelledCorrectly(string, description, [..., whiteListedCustomWords])
+  ```
+
+The function takes three arguments:
+1. (Required) The string of text you wish to verify.
+2. (Required) A description of the text that will be used in the test output.
+3. (Optional) An array of custom words you wish to whitelist for all future test runs. 
+   1. **eg.**  ["customWordOne", "customWordTwo"]
+   2. **Note:** Whitelisting words is permanent and could negatively impact future test runs.
+
+
+Example verifying the page title doesn't contain any spelling mistakes:
+```javascript
+    it('The page title should not contain any spelling mistakes', () => {
+        cy.visit('cypress/e2e/html/no-spelling-mistakes.html').then(() => {
+            cy.get('html').then(function (e) {
+                let title = e.find('title').text();
+                cy.isSpelledCorrectly(title, 'website title');
+            });
+        });
+    });
+```
+
+Example whitelisting a word and verifying the page title doesn't contain any spelling mistakes:
+```javascript
+    it('The page title should not contain any spelling mistakes', () => {
+        cy.visit('cypress/e2e/html/no-spelling-mistakes.html').then(() => {
+            cy.get('html').then(function (e) {
+                let title = e.find('title').text();
+                cy.isSpelledCorrectly(title, 'website title', ['catz', 'dogz']);
+            });
+        });
+    });
+```
+
+Example iterating over multiple paragraph elements and verifying they do not contain spelling mistakes:
+```javascript
+    cy.get('p').each((paragraph) => {
+        let text = paragraph.text();
+        cy.isSpelledCorrectly(text, `paragraph ("${text}")`);
+    });
+```
+
+
+![failed assertion example](https://github.com/waltir/cypress-spellcheck/blob/master/assets/Cypress-Spellcheck-v2.jpg?raw=true)
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -118,13 +164,15 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- Testing The Module -->
 ## Testing The Module
 
-* Navigate to the node module and then execute the following command to run a Cypress test against two dummy html documents. The test script contains 36 tests with a total of 18 passing assertions and 18 failing.
+Navigate to the node module and then execute the following command to run a Cypress test against two dummy html documents. The test script contains 36 tests with a total of 18 passing assertions and 18 failing.
 
-    ```
-        npm run test
-    ```
+```javascript
+    npm run test
+```
 
-[![Test Screen Shot][test-screenshot]](https://github.com/waltir/cypress-spellcheck/assets/Cypress-Spellcheck-v3.jpg)
+The executed test will result in an even number of passed and failed results as the no-spelling-mistakes.html and has-spelling-mistakes.html documents are tested.
+
+![test script results](https://github.com/waltir/cypress-spellcheck/blob/master/assets/Cypress-Spellcheck-v3.jpg?raw=true)
 
 
 See the [open issues](https://github.com/waltir/cypress-spellcheck/issues) for a full list of proposed features (and known issues).
