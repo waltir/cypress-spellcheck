@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/cypress-io/cypress">
     <img src="https://github.com//cypress-io/cypress/raw/develop/assets/cypress-logo-light.png" alt="Logo" width="auto" height="80">
   </a>
 
