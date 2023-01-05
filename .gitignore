@@ -1,6 +1,6 @@
-./cypress/videos/*
-./cypress/screenshots/*
-./cypress/models/*
-./cypress/fixtures/*
+cypress/videos
+cypress/screenshots
+cypress/models
+cypress/fixtures
 node_modules
-.package-lock.json
+package-lock.json
