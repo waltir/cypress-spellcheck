@@ -77,22 +77,59 @@ This module is distributed via [npm](https://npmjs.com/) which is bundled with [
 
 ### Installation
 
-* Execute the following npm command from your projects root directory.
+Execute the following npm command from your projects root directory.
 
-  ```sh
+  ```shell
     npm i cypress-spellcheck --save-dev
   ```
 
 ### Setup
 
-* The Cypress Spellcheck Library extends the Cypress' cy command.
+The Cypress Spellcheck Library extends the Cypress' cy command.
 
-* To access the spellcheck assertion You must first add this line to your project's cypress/support/commands.js file.
+-----
+1. To access the spellcheck assertion You must first add this line to your project's cypress/support/commands.js file.
 
-  ```sh
-    import '@cypress-spellcheck/add-commands
+  ```javascript
+    import "cypress-spellcheck";
   ```
-You can now use assetions within the Testing Library.
+
+Example of a working cypress/support/commands.js file.
+```javascript
+import "./commands"
+import "../../node_modules/cypress-spellcheck";
+```
+-----
+2. Next, you'll need to include the spellCheck task in your cypress.config.js file by adding this to the top of the file.
+
+  ```javascript
+      const spellCheck = require("cypress-spellcheck/task");
+  ```
+-----
+3. Finally, you'll need to initialize the spellCheck task by including the following call within "setupNodeEvents".
+```javascript
+    spellCheck(on);
+```
+
+Full example of a cypress.config.js file
+```javascript
+    const { defineConfig } = require("cypress");
+    const spellCheck = require("cypress-spellcheck/task");
+
+    module.exports = defineConfig({
+        e2e: {
+            setupNodeEvents(on, config) {
+                spellCheck(on)
+            },
+        },
+    });
+```
+
+You can now use assetions within the Testing Library simply by calling cy.isSpelledCorrectly.
+```javascript
+    cy.isSpelledCorrectly("something and something else", "example string");
+```
+-----
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
