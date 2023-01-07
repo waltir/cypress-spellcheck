@@ -141,8 +141,8 @@ You can now use assetions within the Testing Library simply by calling cy.isSpel
 
 To use the assertions in your tests simply call the isSpelledCorrectly function.
 
-  ```
-    cy.isSpelledCorrectly(string, description, [..., whiteListedCustomWords])
+  ```javascript
+    cy.isSpelledCorrectly(string, description, [..., whiteListedCustomWords]);
   ```
 
 The function takes three arguments:
